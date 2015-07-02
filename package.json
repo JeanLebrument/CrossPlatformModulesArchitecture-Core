@@ -1,0 +1,9 @@
+{
+  "author": "Jean Lebrument",
+  "name": "PropertyFinderCore",
+  "version": "0.0.1",
+  "dependencies": {
+    "flux": "^2.0.1",
+    "keymirror": "~0.1.0"
+  }
+}
