@@ -1,6 +1,8 @@
 'use strict';
 
-class SearchPageAPI {
+var jsonp = require('jsonp');
+
+class SearchResultsAPI {
   static findResultsForCurrentLocation(success, failure) {
     var result = {};
 
@@ -49,15 +51,20 @@ class SearchPageAPI {
   };
 
   static _executeQuery(query) {
-    return fetch(query)
-      .then(response => response.json())
-      .then(json => new Promise(function(resolve, reject) {
-            if (json.response.application_response_code.substr(0, 1) === '1')
-              resolve(json.response.listings);
-            else
-              reject('Location not recognized please try again.');
-          }));
+    return new Promise(function(resolve, reject) {
+      jsonp(query, function(err, data) {
+        if (err)
+          reject(err);
+        else
+          resolve(data);
+      });
+    }).then(response => new Promise(function(resolve, reject) {
+          if (response.response.application_response_code.substr(0, 1) === '1')
+            resolve(response.response.listings);
+          else
+            reject('Location not recognized please try again.');
+        }));
   }
 }
 
-module.exports = SearchPageAPI;
+module.exports = SearchResultsAPI;

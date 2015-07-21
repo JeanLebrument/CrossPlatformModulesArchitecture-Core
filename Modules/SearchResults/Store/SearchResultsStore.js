@@ -2,7 +2,7 @@
 
 var EventEmitter = require('events').EventEmitter;
 var AppDispatcher = require('../../../Common/AppDispatcher');
-var SearchPageConstants = require('../Constants/SearchPageConstants');
+var SearchResultsConstants = require('../Constants/SearchPageConstants');
 
 var _results = null;
 var _resultError = null;
@@ -15,7 +15,7 @@ function _setResultError(resultError) {
   _resultError = resultError;
 }
 
-class SearchPageStore extends EventEmitter {
+class SearchResultsStore extends EventEmitter {
   getResults() {
     return _results;
   }
@@ -37,19 +37,19 @@ class SearchPageStore extends EventEmitter {
   }
 }
 
-var searchPageStore = new SearchPageStore();
+var searchResultsStore = new SearchResultsStore();
 
 AppDispatcher.register(function(payload) {
   switch (payload.eventName) {
-    case SearchPageConstants.SEARCH_FOR_LOCATION:
+    case SearchResultsConstants.SEARCH_FOR_LOCATION:
       _setResults(payload.results);
       _setResultError(payload.resultError);
       break;
   }
 
-  searchPageStore.emitChange();
+  searchResultsStore.emitChange();
 
   return true;
 });
 
-module.exports = searchPageStore;
+module.exports = searchResultsStore;

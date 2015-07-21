@@ -1,32 +1,32 @@
 'use strict';
 
 var AppDispatcher = require('../../../../Core/Common/AppDispatcher');
-var SearchPageConstants = require('../Constants/SearchPageConstants');
-var SearchPageAPI = require('../../../../Core/Modules/SearchPage/API/SearchPageAPI');
-var SearchPageStore = require('../../../../Core/Modules/SearchPage/Store/SearchPageStore');
+var SearchResultsConstants = require('../Constants/SearchPageConstants');
+var SearchResultsAPI = require('../../../../Core/Modules/SearchPage/API/SearchPageAPI');
+var SearchResultsStore = require('../../../../Core/Modules/SearchPage/Store/SearchPageStore');
 
-class SearchPageAction {
+class SearchResultsAction {
   static _dispatchResult(results, error) {
     AppDispatcher.dispatch({
-      eventName: SearchPageConstants.SEARCH_FOR_LOCATION,
+      eventName: SearchResultsConstants.SEARCH_FOR_LOCATION,
       results: results,
       resultError: error
     });
   }
 
   static searchResultsForCurrentLocation() {
-    SearchPageAPI.findResultsForCurrentLocation(
+    SearchResultsAPI.findResultsForCurrentLocation(
       results => { SearchPageAction._dispatchResult(results, null); },
       error => { SearchPageAction._dispatchResult(null, error); }
     );
   }
 
   static searchResultsForLocation(location) {
-    SearchPageAPI.findResultsForLocation(location)
+    SearchResultsAPI.findResultsForLocation(location)
       .then(result => { SearchPageAction._dispatchResult(result, null); },
             error => { SearchPageAction._dispatchResult(null, error); }
         );
   }
 }
 
-module.exports = SearchPageAction;
+module.exports = SearchResultsAction;
