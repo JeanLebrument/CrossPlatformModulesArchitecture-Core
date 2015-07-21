@@ -2,7 +2,7 @@
 
 var EventEmitter = require('events').EventEmitter;
 var AppDispatcher = require('../../../Common/AppDispatcher');
-var SearchResultsConstants = require('../Constants/SearchPageConstants');
+var SearchResultsConstants = require('../Constants/SearchResultsConstants');
 
 var _results = null;
 var _resultError = null;

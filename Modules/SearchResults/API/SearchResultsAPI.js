@@ -9,7 +9,7 @@ class SearchResultsAPI {
     navigator.geolocation.getCurrentPosition(location => {
       result.formatedLocation = location.coords.latitude + ',' + location.coords.longitude;
 
-      SearchPageAPI._executeQuery(SearchPageAPI._formattingQuery('centre_point', result.formatedLocation, 1))
+      SearchResultsAPI._executeQuery(SearchResultsAPI._formattingQuery('centre_point', result.formatedLocation, 1))
         .then(data => {
           result.listings = data;
 
@@ -23,7 +23,7 @@ class SearchResultsAPI {
   }
 
   static findResultsForLocation(location) {
-    return SearchPageAPI._executeQuery(SearchPageAPI._formattingQuery('place_name', location, 1))
+    return SearchResultsAPI._executeQuery(SearchResultsAPI._formattingQuery('place_name', location, 1))
       .then(data => {
         return new Promise(function(resolve, reject) { resolve({ location: location, listings: data }); });
       }, error => {

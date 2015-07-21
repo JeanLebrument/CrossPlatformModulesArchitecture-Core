@@ -1,9 +1,9 @@
 'use strict';
 
 var AppDispatcher = require('../../../../Core/Common/AppDispatcher');
-var SearchResultsConstants = require('../Constants/SearchPageConstants');
-var SearchResultsAPI = require('../../../../Core/Modules/SearchPage/API/SearchPageAPI');
-var SearchResultsStore = require('../../../../Core/Modules/SearchPage/Store/SearchPageStore');
+var SearchResultsConstants = require('../Constants/SearchResultsConstants');
+var SearchResultsAPI = require('../../../../Core/Modules/SearchResults/API/SearchResultsAPI');
+var SearchResultsStore = require('../../../../Core/Modules/SearchResults/Store/SearchResultsStore');
 
 class SearchResultsAction {
   static _dispatchResult(results, error) {
