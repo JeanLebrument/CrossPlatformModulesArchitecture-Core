@@ -3,27 +3,29 @@
 var jsonp = require('jsonp');
 
 class SearchResultsAPI {
-  static findResultsForCurrentLocation(success, failure) {
+  static findResultsForCurrentLocation() {
     var result = {};
 
-    navigator.geolocation.getCurrentPosition(location => {
-      result.formatedLocation = location.coords.latitude + ',' + location.coords.longitude;
+    return new Promise(function(resolve, reject) {
+      navigator.geolocation.getCurrentPosition(location => {
+        result.formatedLocation = location.coords.latitude + ',' + location.coords.longitude;
 
-      SearchResultsAPI._executeQuery(SearchResultsAPI._formattingQuery('centre_point', result.formatedLocation, 1))
-        .then(data => {
-          result.listings = data;
+        this._executeQuery(SearchResultsAPI._formattingQuery('centre_point', result.formatedLocation, 1))
+          .then(data => {
+            result.listings = data;
 
-          success(result);
+            resolve(result);
+          }, error => {
+            reject(Error('Error while searching results: ' + JSON.stringify(error)));
+          });
         }, error => {
-          failure('Error while searching results: ' + JSON.stringify(error));
+          reject(Error('Error while searching results: ' + JSON.stringify(error)));
         });
-      }, error => {
-        failure('Error while searching results: ' + JSON.stringify(error));
-      });
+    });
   }
 
   static findResultsForLocation(location) {
-    return SearchResultsAPI._executeQuery(SearchResultsAPI._formattingQuery('place_name', location, 1))
+    return this._executeQuery(this._formattingQuery('place_name', location, 1))
       .then(data => {
         return new Promise(function(resolve, reject) { resolve({ location: location, listings: data }); });
       }, error => {
@@ -51,19 +53,7 @@ class SearchResultsAPI {
   };
 
   static _executeQuery(query) {
-    return new Promise(function(resolve, reject) {
-      jsonp(query, function(err, data) {
-        if (err)
-          reject(err);
-        else
-          resolve(data);
-      });
-    }).then(response => new Promise(function(resolve, reject) {
-          if (response.response.application_response_code.substr(0, 1) === '1')
-            resolve(response.response.listings);
-          else
-            reject('Location not recognized please try again.');
-        }));
+    throw new TypeError("SearchResultsAPI - _executeQuery is an abstract method");
   }
 }
 
