@@ -14,18 +14,19 @@ class SearchResultsAction {
     });
   }
 
-  static searchResultsForCurrentLocation(httpClientClass) {
-    httpClientClass.findResultsForCurrentLocation()
-      .then(results => { SearchResultsAction._dispatchResult(results, null); },
-            error => { SearchResultsAction._dispatchResult(null, error); }
-      );
-  }
-
   static searchResultsForLocation(httpClientClass, location) {
-    httpClientClass.findResultsForLocation(location)
-      .then(result => { SearchResultsAction._dispatchResult(result, null); },
-            error => { SearchResultsAction._dispatchResult(null, error); }
-      );
+    if (location.toLowerCase() === "current location") {
+      httpClientClass.findResultsForCurrentLocation()
+        .then(results => { SearchResultsAction._dispatchResult(results, null); },
+              error => { SearchResultsAction._dispatchResult(null, error); }
+        );
+    }
+    else {
+      httpClientClass.findResultsForLocation(location)
+        .then(result => { SearchResultsAction._dispatchResult(result, null); },
+              error => { SearchResultsAction._dispatchResult(null, error); }
+        );
+    }
   }
 }
 
