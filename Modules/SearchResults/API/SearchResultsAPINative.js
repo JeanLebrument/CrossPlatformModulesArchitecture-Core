@@ -4,7 +4,6 @@ var SearchResultsAPI = require('./SearchResultsAPI');
 
 class SearchResultsAPINative extends SearchResultsAPI {
   static _executeQuery(query) {
-    console.log('query: ' + query);
     return fetch(query)
       .then(response => response.json())
       .then(response => new Promise(function(resolve, reject) {
