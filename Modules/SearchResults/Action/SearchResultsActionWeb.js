@@ -5,7 +5,7 @@ var SearchResultsAPIWeb = require('../API/SearchResultsAPIWeb');
 
 class SearchResultsActionWeb extends SearchResultsAction {
   static searchResultsForLocation(location) {
-    SearchResultsAction.findResultsForLocation(SearchResultsAPIWeb, location)
+    SearchResultsAction.searchResultsForLocation(SearchResultsAPIWeb, location)
   }
 }
 
