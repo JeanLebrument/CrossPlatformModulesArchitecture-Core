@@ -1,9 +1,11 @@
 'use strict';
 
 var SearchResultsAPI = require('./SearchResultsAPI');
+var jsonp = require("jsonp");
 
 class SearchResultsAPIWeb extends SearchResultsAPI {
   static _executeQuery(query) {
+
     return new Promise(function(resolve, reject) {
       jsonp(query, function(err, data) {
         if (err)
